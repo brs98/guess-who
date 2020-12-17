@@ -28,9 +28,7 @@ class GameManager {
 
     createGame(gameData, timeout = this.gameLifespan) {
         let gameId = this.newGameId();
-        console.log(gameData)
         this.games.set(gameId,gameData)
-        console.log(this.games)
         return gameId;
     }
 
