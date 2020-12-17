@@ -14,7 +14,6 @@ app.listen(port, () => {
 let gameMan = new GameManager();
 
 app.post('/create', (req,res) => {
-    console.log(req.body)
     let id = gameMan.createGame(req.body);
     if (id) {
         res.status(200);
