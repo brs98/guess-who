@@ -26,17 +26,21 @@ class GameManager {
         return newId;
     }
 
-    createGame(gameData) {
+    createGame(gameData, timeout = this.gameLifespan) {
         let gameId = this.newGameId();
+        console.log(gameData)
         this.games.set(gameId,gameData)
-
-        let ctx = this;
-        // setTimeout(() => console.log("hello"), timeout);
+        console.log(this.games)
         return gameId;
     }
 
-    requestGame(id) {
-        if (this.games.has(id)) return this.games.get(id);
+    joinGame(id) {
+        console.log(id,this.games)
+        if (this.games.has(id)) {
+            let data = this.games.get(id);
+            this.removeGame(id);
+            return data;
+        }
         else return null;
     }
 

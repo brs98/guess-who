@@ -38,3 +38,14 @@ test('unique gameIds', ()=>{
         ids.push(newId);
     }
 })
+
+test('join Game: Removes from list', ()=>{
+    const man = new GameManager();
+
+    let data = {};
+
+    let id = man.createGame(data);
+
+    expect.equal(man.joinGame(id),data);
+    expect.equal(man.joinGame(id),null);
+})
