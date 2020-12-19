@@ -1,5 +1,6 @@
 export default class Person {
     name:string;
+    pid:string;
     photoUrl?:string;
     birth?:number;
     birthPlace?:string;
@@ -8,6 +9,7 @@ export default class Person {
 
     constructor(props: {
         name:string;
+        pid:string;
         photoUrl?:string;
         birth?:number;
         birthPlace?:string;
