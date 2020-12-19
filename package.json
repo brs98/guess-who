@@ -5,14 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test":"node runTests.js",
+    "test": "node runTests.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
-    "oliver-test": "^1.1.2",
+    "oliver-test": "^1.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
