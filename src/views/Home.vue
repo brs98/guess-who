@@ -1,22 +1,17 @@
 <template>
   <div class="home">
-    <Card :ancestors="ancestors"/>
+    <Board />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Card from '../components/Card.vue';
+import Board from '../components/Board.vue';
 
 export default Vue.extend({
   name: 'Home',
   components: {
-    Card,
+    Board
   },
-  computed: {
-      ancestors() {
-        return this.$root.$data.Ancestors;
-      }
-    },
 });
 </script>
