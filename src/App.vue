@@ -7,7 +7,10 @@
     </div>
     <router-view/>
   </div>
-  <div v-else>
+  <div id="app" v-else>
+    <div id="nav">
+      <a href="https://fhtl.byu.edu/index.html" target="_blank">FHTL Website</a>
+    </div>
     <Login />
   </div>
 </template>

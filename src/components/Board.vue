@@ -22,6 +22,6 @@
 <style scoped>
   .board {
     border-style: solid;
-    background-color: #e1e1fa;
+    border-radius: 4px;
   }
 </style>

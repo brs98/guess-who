@@ -59,7 +59,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 
 .wrapper {
   display: inline-block;
@@ -68,14 +68,14 @@
 
 h1 {
   margin: 0px;
-  font-size: 100%;
+  font-size: 90%;
   color: green;
 }
 
 .data {
   font-size: 50%;
   background-color: #C2DEFC;
-  color: green;
+  color: #2b8643;
 }
 
 .ancestor {
@@ -109,6 +109,16 @@ img {
   width: 15vw;
   height: 35vh;
   object-fit: cover;
+}
+
+@media only screen and (max-width: 600px) {
+  .ancestor {
+    width: 33%;
+  }
+  img {
+    width: 18vw;
+    height: 18vh;
+  }
 }
 
 </style>
