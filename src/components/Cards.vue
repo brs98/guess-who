@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="ancestors">
-      <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id" @click=flipCard(ancestor)>
+      <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id" @click="flipCard(ancestor)">
         <div class="info" v-bind:style="ancestor.flipped ? backOfCard : frontOfCard">
           <transition name="imageSwitch" :duration="200" mode="out-in">
             <img v-if="ancestor.flipped === false" :src="'/images/'+ancestor.image" key="ancestorImage">
@@ -9,6 +9,7 @@
           </transition>
           <h1 v-bind:style="ancestor.flipped ? backName : frontName">{{ancestor.name}}</h1>
           <div class="data" v-bind:style="ancestor.flipped ? backInfo : frontInfo">
+            <h2>{{ancestor.id}}</h2>
             <h2>Date of Birth: {{ancestor.dateOfBirth}}</h2>
             <h2>Date of Death: {{ancestor.dateOfDeath}}</h2>
             <h2>Place of Birth: {{ancestor.placeOfBirth}}</h2>
@@ -24,7 +25,7 @@
   export default {
     name: "Card",
     props: {
-      ancestors: Array
+      ancestors: Array,
     },
     data() {
       return {
@@ -53,7 +54,7 @@
     },
     methods: {
       flipCard(ancestor) {
-        ancestor.flipped = !ancestor.flipped;
+        ancestor.flipped = !ancestor.flipped
       }
     }
   }

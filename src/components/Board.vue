@@ -1,15 +1,15 @@
 <template>
   <div class="board">
-    <Card :ancestors="ancestors"/>
+    <Cards :ancestors="ancestors"/>
   </div>
 </template>
 
 <script>
-  import Card from './Card.vue';
+  import Cards from './Cards.vue';
   export default {
     name: 'Board',
     components: {
-      Card
+      Cards
     },
     computed: {
         ancestors() {
