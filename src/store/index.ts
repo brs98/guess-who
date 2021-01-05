@@ -31,6 +31,7 @@ export default new Vuex.Store({
         sessionStorage.removeItem('userToken')
         delete axios.defaults.headers.common['Authorization']
         resolve()
+        window.location = '/#/'
       })
     }
   },
