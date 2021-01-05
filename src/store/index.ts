@@ -7,7 +7,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: sessionStorage.getItem('userToken') || '',
-    status: '',
   },
   mutations: {
     login: () => {
@@ -19,7 +18,6 @@ export default new Vuex.Store({
       sessionStorage.setItem('userToken', 'good');
     },
     logout(state) {
-      state.status = ''
       state.token = ''
     }
   },
