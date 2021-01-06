@@ -1,11 +1,6 @@
 //HELPER FUNCTIONS
 import axios from 'axios';
 
-function setTree(state, rootName) {
-  console.log('setTree function was called!');
-  state.person.tree = rootName;
-}
-
 export function downloadTree(state) {
   console.log('downloadTree function was called!');
   const pid = state.person.pid;
@@ -15,11 +10,9 @@ export function downloadTree(state) {
     'Authorization': 'Bearer ' + state.fsToken
   }
   axios.get(url, {'headers': headers}).then((res) => {
-    let people = res.data.persons.filter((person) => person.display.ascendancyNumber >= 8) // remove self, spouse, parents, and grandparents
-    if (people.length <= 3) { //if removing those people results in 3 people or less, go ahead and use anyone
-      people = res.data.persons;
+    for (let i = 0; i < 15; i++) {
+      state.person.tree[i] = res.data.persons[i].display.name
     }
-    setTree(state, res.data.persons[0].display.name);
   }).catch((err) => {
     console.log(err);
   })

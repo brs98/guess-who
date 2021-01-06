@@ -14,7 +14,7 @@ export default new Vuex.Store({
     token: sessionStorage.getItem('userToken') || '',
     person: {
       pid: '',
-      tree: ''
+      tree: []
     }
   },
   mutations: {
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       state.fsToken = '';
       state.token = '';
       state.person.pid = '';
-      state.person.tree = '';
+      state.person.tree = [];
     },
     setPlayerInfo: state => {
       const codedToken = window.location.search.split("=")[1];
