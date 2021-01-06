@@ -13,5 +13,8 @@ export default Vue.extend({
   components: {
     Board
   },
+  mounted() {
+    this.$store.dispatch('setPlayerInfo');
+  }
 });
 </script>
