@@ -9,9 +9,9 @@
           </transition>
           <h1 v-bind:style="ancestor.flipped ? backName : frontName">{{ancestor.name}}</h1>
           <div class="data" v-bind:style="ancestor.flipped ? backInfo : frontInfo">
-            <h2>{{ancestor.id}}</h2>
-            <h2>Date of Birth: {{ancestor.dateOfBirth}}</h2>
-            <h2>Date of Death: {{ancestor.dateOfDeath}}</h2>
+            <h2> {{ancestor.pid}} </h2>
+            <h2>Gender: {{ancestor.gender}}</h2>
+            <h2>Lifespan: {{ancestor.lifespan}}</h2>
             <h2>Place of Birth: {{ancestor.placeOfBirth}}</h2>
             <h2>Place of Death: {{ancestor.placeOfDeath}}</h2>
           </div>
@@ -22,11 +22,13 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   export default {
     name: "Card",
-    props: {
-      ancestors: Array,
-    },
+    computed: mapState({
+      ancestors: state => state.person.tree
+    }),
     data() {
       return {
         backOfCard: {

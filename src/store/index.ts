@@ -14,7 +14,23 @@ export default new Vuex.Store({
     token: sessionStorage.getItem('userToken') || '',
     person: {
       pid: '',
-      tree: []
+      tree: [
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false }
+      ]
     }
   },
   mutations: {
