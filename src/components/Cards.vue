@@ -4,12 +4,11 @@
       <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id" @click="flipCard(ancestor)">
         <div class="info" v-bind:style="ancestor.flipped ? backOfCard : frontOfCard">
           <transition name="imageSwitch" :duration="200" mode="out-in">
-            <img v-if="ancestor.flipped === false" :src="'/images/'+ancestor.image" key="ancestorImage">
+            <img v-if="ancestor.flipped === false" :src="ancestor.image" key="ancestorImage">
             <img v-else :src="'/images/matching.png'" key="treeImage">
           </transition>
           <h1 v-bind:style="ancestor.flipped ? backName : frontName">{{ancestor.name}}</h1>
           <div class="data" v-bind:style="ancestor.flipped ? backInfo : frontInfo">
-            <h2> {{ancestor.pid}} </h2>
             <h2>Gender: {{ancestor.gender}}</h2>
             <h2>Lifespan: {{ancestor.lifespan}}</h2>
             <h2>Place of Birth: {{ancestor.placeOfBirth}}</h2>

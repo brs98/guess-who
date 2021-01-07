@@ -1,6 +1,27 @@
 //HELPER FUNCTIONS
 import axios from 'axios';
 
+function getImages(state, i) {
+  console.log('getImages function was called');
+  const pid = state.person.tree[i].pid;
+  const url = 'https://api.familysearch.org/platform/tree/persons/' + pid + '/portrait';
+  const headers = {
+    'Accept': 'application/x-fs-v1+json',
+    'Authorization': 'Bearer ' + state.fsToken,
+    'X-Expect-Override': '200-ok',
+  }
+  axios.get(url, {'headers': headers}).then((res) => {
+    if (res.headers.location) {
+      state.person.tree[i].image = res.headers.location;
+    }
+    else {
+      state.person.tree[i].image = '/images/smiley.png';
+    }
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
 export function downloadTree(state) {
   console.log('downloadTree function was called!');
   const pid = state.person.pid;
@@ -47,23 +68,9 @@ export function downloadTree(state) {
       else {
         state.person.tree[i].pid = 'Unknown';
       }
+      getImages(state, i);
     }
   }).catch((err) => {
     console.log(err);
   })
 }
-
-
-//function getImages(state) {
-  //console.log('getImages function was called!');
-  //const pid = state.person.tree;
-  //const url = 'https://api.familysearch.org/platform/tree/persons/' + pid + '/portrait';
-  //const headers = {
-    //'Accept': 'application/x-fs-v1+json',
-    //'X-Expect-Override': '200-ok',
-  //}
-  //axios.get(url, {'headers': headers}).then((res) => {
-
-  //})
-
-//}
