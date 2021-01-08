@@ -8,9 +8,9 @@
       <h1>Game Play</h1>
       <p>Alternate turns asking one question. The youngest player goes first.</p>
       <p>On your turn, ask a question that can be answered with a "yes" or "no".</p>
-      <p>For example: "Was your Mystery Ancestor born in the 1900's?"</p>
-      <p>If the answer is "yes", then you know that all of the ancestors not born in the 1900's can be eliminated from your board.</p>
-      <p>If the answer is "no", then all of the ancestors born in the 1900's can be eliminated from your board.</p>
+      <p>For example: "Was your Mystery Ancestor born in the 1930's?"</p>
+      <p>If the answer is "yes", then you know that all of the ancestors not born in the 1930's can be eliminated from your board.</p>
+      <p>If the answer is "no", then all of the ancestors born in the 1930's can be eliminated from your board.</p>
       <p>To eliminate an ancestor from the board, simply click on their card, and it will flip over.</p>
       <p>Keep taking turns asking questions until someone thinks they can guess which ancestor their opponent selected.</p>
     </div>

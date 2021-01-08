@@ -13,8 +13,10 @@ export default Vue.extend({
   components: {
     Board
   },
-  mounted() {
-    this.$store.dispatch('setPlayerInfo');
+  created() {
+    if (this.$store.state.person.tree[0].image !== '/images/smiley.png') {
+      this.$store.dispatch('setPlayerInfo');
+    }
   }
 });
 </script>

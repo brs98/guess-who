@@ -12,25 +12,27 @@ export default new Vuex.Store({
   state: {
     fsToken: '',
     token: sessionStorage.getItem('userToken') || '',
+    mysteryAncestorSelected: false,
     person: {
       pid: '',
       tree: [
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false }
-      ]
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
+        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false }
+      ],
+      mysteryAncestor: {}
     }
   },
   mutations: {
@@ -45,6 +47,7 @@ export default new Vuex.Store({
     logout: state => {
       state.fsToken = '';
       state.token = '';
+      state.mysteryAncestorSelected = false;
       state.person.pid = '';
       state.person.tree = [];
     },
@@ -60,6 +63,19 @@ export default new Vuex.Store({
       else {
         console.log('The codedToken did not work');
         console.log('codedToken value: ' + codedToken);
+      }
+    },
+    deselectAllAncestors: state => {
+      for (let i = 0; i < 15; i++) {
+        state.person.tree[i].selected = false;
+      }
+    },
+    separateMysteryAncestor: state => {
+      for (let i = 0; i < 15; i++) {
+        if (state.person.tree[i].mysteryAncestor === true) {
+          console.log('Assigned mysteryAncestor')
+          state.person.mysteryAncestor = state.person.tree[i];
+        }
       }
     }
   },
@@ -78,7 +94,9 @@ export default new Vuex.Store({
     },
     setPlayerInfo: context => {
       context.commit('setPlayerInfo')
-    }
+    },
+    deselectAllAncestors: context => context.commit('deselectAllAncestors'),
+    separateMysteryAncestor: context => context.commit('separateMysteryAncestor')
   },
   getters : {
     isLoggedIn: state => !!state.token

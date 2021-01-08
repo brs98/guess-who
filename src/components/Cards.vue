@@ -1,6 +1,19 @@
 <template>
   <div class="wrapper">
     <div class="ancestors">
+        <div class="mysteryAncestor">
+          <div class="info" v-bind:style="frontOfCard">
+            <h1>YOUR MYSTERY ANCESTOR</h1>
+            <img :src="mysteryAncestor.image" key="mysteryAncestorImage">
+            <h1 v-bind:style="frontName">{{mysteryAncestor.name}}</h1>
+            <div class="data" v-bind:style="frontInfo">
+              <h2>Gender: {{mysteryAncestor.gender}}</h2>
+              <h2>Lifespan: {{mysteryAncestor.lifespan}}</h2>
+              <h2>Place of Birth: {{mysteryAncestor.placeOfBirth}}</h2>
+              <h2>Place of Death: {{mysteryAncestor.placeOfDeath}}</h2>
+            </div>
+          </div>
+        </div>
       <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id" @click="flipCard(ancestor)">
         <div class="info" v-bind:style="ancestor.flipped ? backOfCard : frontOfCard">
           <transition name="imageSwitch" :duration="200" mode="out-in">
@@ -26,7 +39,8 @@
   export default {
     name: "Card",
     computed: mapState({
-      ancestors: state => state.person.tree
+      ancestors: state => state.person.tree,
+      mysteryAncestor: state => state.person.mysteryAncestor
     }),
     data() {
       return {
