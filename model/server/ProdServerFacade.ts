@@ -5,7 +5,8 @@ import JoinGameRequest from "./req-res/JoinGameRequest";
 import JoinGameResponse from "./req-res/JoinGameResponse";
 import ServerFacade from "./ServerFacade";
 
-export default class DummyServerFacade implements ServerFacade {
+export default class ProdServerFacade implements ServerFacade {
+    apiPath:string = "/api"
     gameId:string = "test";
     gameData:GameData = new GameData();
 

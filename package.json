@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve dev": "export DEV=true && vue-cli-service serve",
+    "serve": "export DEV=false vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "node runTests.js",
     "lint": "vue-cli-service lint"
@@ -12,7 +13,7 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
-    "oliver-test": "^1.2.0",
+    "oliver-test": "^1.3.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

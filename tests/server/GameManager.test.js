@@ -49,3 +49,8 @@ test('join Game: Removes from list', ()=>{
     expect.equal(man.joinGame(id),data);
     expect.equal(man.joinGame(id),null);
 })
+
+test('join Game: bad id', ()=>{
+    const man = new GameManager();
+    expect.equal(man.joinGame("badID"),null);
+})
