@@ -62,9 +62,6 @@
         this.$store.dispatch('separateMysteryAncestor');
         alert('The youngest player goes first. Have fun!');
       }
-    },
-    mounted() {
-      this.$store.dispatch('deselectAllAncestors');
     }
   }
 </script>

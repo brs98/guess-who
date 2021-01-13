@@ -14,8 +14,11 @@ export default Vue.extend({
     Board
   },
   created() {
-    if (this.$store.state.person.tree[0].image !== '/images/smiley.png') {
+    if (!this.$store.state.person.tree[0].image) {
       this.$store.dispatch('setPlayerInfo');
+    }
+    if (window.location.search === '') {
+      this.$store.dispatch('logout');
     }
   }
 });
