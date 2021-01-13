@@ -1,26 +1,17 @@
 <template>
-  <div id="app" v-if="isLoggedIn">
+  <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/instructions">How To Play</router-link>
-      <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
     </div>
     <router-view/>
-  </div>
-  <div id="app" v-else>
-    <div id="nav">
-      <a href="https://fhtl.byu.edu/index.html" target="_blank">FHTL Website</a>
-    </div>
-    <Login />
   </div>
 </template>
 
 <script>
-  import Login from './views/Login.vue';
   export default {
     name: 'App',
     components: {
-      Login
     },
     computed: {
       isLoggedIn() {
@@ -28,9 +19,6 @@
       }
     },
     methods: {
-      logout() {
-        this.$store.dispatch('logout');
-      }
     }
   }
 </script>

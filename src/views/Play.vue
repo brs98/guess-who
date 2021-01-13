@@ -29,8 +29,8 @@
 </template>
 
 <script>
-  import Cards from './Cards.vue';
-  import PreselectionCards from './PreselectionCards.vue';
+  import Cards from '../components/Cards.vue';
+  import PreselectionCards from '../components/PreselectionCards.vue';
   import { mapState } from 'vuex';
   export default {
     name: 'Board',
