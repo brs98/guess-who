@@ -13,6 +13,9 @@
     name: 'App',
     components: {
     },
+    created() {
+      return this.$store.dispatch("determineLoginStatus");
+    },
     computed: {
       isLoggedIn() {
         return this.$store.getters.isLoggedIn;

@@ -1,39 +1,32 @@
 <template>
   <div class="wrapper">
     <div class="ancestors">
-      <div class="mysteryAncestor">
-        <div class="info" v-bind:style="frontOfCard">
-          <h1>YOUR MYSTERY ANCESTOR</h1>
-          <img :src="mysteryAncestor.image" key="mysteryAncestorImage">
-          <h1 v-bind:style="frontName">{{mysteryAncestor.name}}</h1>
-          <div class="data" v-bind:style="frontOfCard">
-            <h2>Gender: {{mysteryAncestor.gender}}</h2>
-            <h2>Lifespan: {{mysteryAncestor.lifespan}}</h2>
-            <h2>Place of Birth: {{mysteryAncestor.placeOfBirth}}</h2>
-            <h2>Place of Death: {{mysteryAncestor.placeOfDeath}}</h2>
+      <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id" @click="cardClick(ancestor)">
+        <div class="info" v-bind:style="ancestor.flipped?backOfCard:frontOfCard">
+          <img :src="ancestor.image" key="ancestorImage">
+          <h1 v-bind:style="frontName">{{ancestor.name}}</h1>
+          <div class="data" v-bind:style="frontInfo">
+            <h2>Gender: {{ancestor.gender}}</h2>
+            <h2>Lifespan: {{ancestor.lifespan}}</h2>
+            <h2>Place of Birth: {{ancestor.placeOfBirth}}</h2>
+            <h2>Place of Death: {{ancestor.placeOfDeath}}</h2>
           </div>
         </div>
       </div>
-      <CardsList @cardClick="flipCard" />
     </div>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import CardsList from "@/components/CardsList.vue"
 
   export default {
-    name: "Card",
-    components: {
-      CardsList
-    },
+    name: "CardsList",
     computed: mapState({
-      mysteryAncestor: state => state.person.mysteryAncestor
+      ancestors: state => state.game.tree
     }),
     data() {
       return {
-        ancestors: this.$store.state.game.tree,
         backOfCard: {
           transform: 'rotateY(180deg)',
           transition: '.75s',
@@ -41,16 +34,8 @@
         frontOfCard: {
           transition: '.75s',
         },
-        backInfo: {
-          transitionDelay: '.20s',
-          visibility: 'hidden'
-        },
         frontInfo: {
           transitionDelay: '.25s'
-        },
-        backName: {
-          transform: 'rotateY(-180deg)',
-          transitionDelay: '.25s',
         },
         frontName: {
           transitionDelay: '.25s',
@@ -58,9 +43,8 @@
       }
     },
     methods: {
-      flipCard(ancestor) {
-        ancestor.flipped = !ancestor.flipped
-        console.log(ancestor.flipped)
+      cardClick(ancestor) {
+        this.$emit('cardClick', ancestor)
       }
     }
   }
@@ -106,7 +90,7 @@ h1 {
   }
 
 .info:hover {
-  border-color: #78b7fa;
+  border-color: #2b8643;
   cursor: pointer;
 }
 

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import JWTDecode from 'jwt-decode';
-import * as HelperFunctions from './helperFunctions';
+import GameData from "../../model/entities/GameData.js"
 
 //STORE STARTS HERE
 
@@ -10,83 +10,68 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    fsToken: '',
-    token: sessionStorage.getItem('userToken') || '',
+    apiUrl: process.env.NODE_ENV==="development"? "http://localhost:5000/api" : "/api",
+    fsToken: "",
     mysteryAncestorSelected: false,
+    playerCodes: {
+      playerOne:"playerOne",
+      playerTwo: "playerTwo"
+    },
     person: {
       pid: '',
-      tree: [
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false },
-        { name: '', image: '', lifespan: '', placeOfBirth: '', placeOfDeath: '', gender: '', pid: '', flipped: false, selected: false, mysteryAncestor: false }
-      ],
+      playerCode: "",
       mysteryAncestor: {}
-    }
+    },
+    game: new GameData()
   },
   mutations: {
-    login: () => {
-      axios.get('https://auth.fhtl.byu.edu'+'?redirect=' + window.location.origin + '/&site=key').then((res) => {
-        window.location = res.request.responseURL;
-      }).catch((res) => {
-        console.log(res);
-      });
-      sessionStorage.setItem('userToken', 'good');
-    },
     logout: state => {
       state.fsToken = '';
-      state.token = '';
       state.mysteryAncestorSelected = false;
       state.person.pid = '';
-      state.person.tree = [];
+      state.game = new GameData();
     },
-    setPlayerInfo: state => {
-      const codedToken = window.location.search.split("=")[1];
-      let decodedToken;
-      if (codedToken != undefined) {
-        decodedToken = JWTDecode(codedToken);
-        state.person.pid = decodedToken.fs_user.pid;
-        state.fsToken = decodedToken.fs_access_token;
-        HelperFunctions.downloadTree(state);
-      }
-      else {
-        console.log('The codedToken did not work');
-        console.log('codedToken value: ' + codedToken);
-      }
+    setGameData(state,data) {
+      state.game = data;
     },
     deselectAllAncestors: state => {
       for (let i = 0; i < 15; i++) {
-        state.person.tree[i].selected = false;
+        state.game.tree[i].selected = false;
+        state.game.tree[i].flipped = false;
       }
     },
     separateMysteryAncestor: state => {
       for (let i = 0; i < 15; i++) {
-        if (state.person.tree[i].mysteryAncestor === true) {
+        if (state.game.tree[i].mysteryAncestor === true) {
           console.log('Assigned mysteryAncestor')
-          state.person.mysteryAncestor = state.person.tree[i];
+          state.person.mysteryAncestor = state.game.tree[i];
         }
       }
     }
   },
   actions: {
-    login: context => {
-      context.commit('login')
+    determineLoginStatus(context) {
+      const codedToken = new URLSearchParams(window.location.search).get("fstoken");
+      let decodedToken;
+      if (codedToken != undefined) {
+        decodedToken = JWTDecode(codedToken);
+        context.state.person.pid = decodedToken.fs_user.pid;
+        context.state.fsToken = decodedToken.fs_access_token;
+      }
+      else {
+        console.log('User is not logged in!');
+      }
+    },
+    login: () => {
+      axios.get('https://auth.fhtl.byu.edu'+'?redirect=' + window.location.origin + '/&site=key').then((res) => {
+        window.location = res.request.responseURL;
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     logout({commit}){
       return new Promise<void>((resolve) => {
         commit('logout')
-        sessionStorage.removeItem('userToken')
         delete axios.defaults.headers.common['Authorization']
         resolve()
         window.location.replace('/#/')
@@ -99,6 +84,6 @@ export default new Vuex.Store({
     separateMysteryAncestor: context => context.commit('separateMysteryAncestor')
   },
   getters : {
-    isLoggedIn: state => !!state.token
+    isLoggedIn: state => !!state.fsToken
   }
 })
