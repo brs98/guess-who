@@ -56,7 +56,7 @@ function randomString(length) {
 // ROOMS
 const GameData = require("./model/entities/GameData.js")
 let games = new Map(); //Map<gameId,gameData>
-let gameDeleteDelay = 1000 * 60 * 60;
+let gameDeleteDelay = 1000 * 60 * 10;
 
 
 function createGame(tree) {
