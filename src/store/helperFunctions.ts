@@ -56,6 +56,8 @@ export async function downloadTree(tree,pid,fsToken) {
     await getPersonImage(person,fsToken);
     tree.push(person)
   }
+
+  shuffle(tree);
 }
 
   
@@ -89,4 +91,22 @@ async function getPersonData(person,fsToken) {
     console.log(err);
   })
   console.log(res)
+}
+
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
 }

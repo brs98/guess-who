@@ -16,6 +16,7 @@ export default new Vuex.Store({
       playerOne:"playerOne",
       playerTwo: "playerTwo"
     },
+    mysteryAncestor: null,
     person: {
       pid: '',
       playerCode: "",
@@ -30,10 +31,14 @@ export default new Vuex.Store({
     },
     reset(state) {
       state.person.playerCode = "";
-      state.game = new GameData()
+      state.game = new GameData();
+      state.mysteryAncestor = null;
     },
     setGameData(state,data) {
       state.game = data;
+    },
+    setMysteryAncestor(state,ancestor) {
+      state.mysteryAncestor = ancestor;
     }
   },
   actions: {

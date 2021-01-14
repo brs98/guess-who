@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="$store.state.game">
   <div id="gameCodeBar" class="ui-raised">
     <div class="restrict-width">
       Game Code: {{this.$store.state.game.id.toUpperCase()}}
@@ -7,9 +7,9 @@
   </div>
 
   <div class="restrict-width">
-    <div v-if="!mysteryAncestor">
+    <div v-if="!$store.state.mysteryAncestor">
       <div class="board-section">  
-        <h1>Select your Mystery Ancestor!</h1>
+        <h1>Select your Mystery Person!</h1>
         <CardsList @cardClick="enterGame"/>
       </div>
     </div>
@@ -17,13 +17,13 @@
         <div class="board-section" id="mysteryAncestorBox">
           <details open>
             <summary style="font-weight:bold; font-size: 1.2em; margin: .5em 0; outline:none;">Your Mystery Ancestor</summary>
-            <AncestorCard v-if="mysteryAncestor" :ancestor="mysteryAncestor" :width="'20em'" :height="'20em'" />
+            <AncestorCard v-if="$store.state.mysteryAncestor" :ancestor="$store.state.mysteryAncestor" :width="'20em'" :height="'20em'" />
           </details>
         </div>
       </div>
 
-      <div class="board-section" v-if="mysteryAncestor">
-        <button style="pointer-events: none">Guess your opponent's ancestor!</button>
+      <div class="board-section" v-if="$store.state.mysteryAncestor">
+        <button style="pointer-events: none">Guess your opponent's person!</button>
       
         <!-- <div v-if="makingGuess === false">
           <button @click="makingGuess = true">Make a guess</button>
@@ -82,12 +82,25 @@
         alert(ancestor.name + ' was the Mystery Ancestor or you just lost')
       },
       enterGame(ancestor) {
-        this.mysteryAncestor = ancestor;
-        alert('The youngest player goes first. Have fun!');
+        this.$store.commit("setMysteryAncestor",ancestor);
+        let ctx = this;
+        this.$nextTick(()=>{
+          alert('The youngest player goes first. Have fun!');
+          ctx.flipAll(false,true);
+        })
+      },
+
+      flipAll(toFlipped=true,animate=false) {
+        let offset = 50;
+        for (let i in this.$store.state.game.tree) {
+          let p = this.$store.state.game.tree[i]
+          setTimeout(()=>p.flipped = toFlipped, animate? offset*i : 0);
+        }
       }
     },
-    mounted() {
+    beforeMount() {
       if (!this.$store.state.game.tree) this.$router.push("/")
+      if (!this.$store.state.mysteryAncestor) this.flipAll();
     }
   }
 </script>

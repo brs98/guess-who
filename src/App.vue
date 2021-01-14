@@ -183,17 +183,13 @@ img.ui-raised {
   box-shadow: none;
 }
 .ui-raised.ui-pressable:hover, .ui-raised.ui-pressable:focus {
-    box-shadow: 3px 3px 5px 0px #0004;
-    transform: translateY(-1px);
+    box-shadow: 3px 3px 5px 1px #0004;
+    transform: translateY(-1px) scale(1.05);
 }
 .ui-raised.ui-pressable:active {
     box-shadow: 1px 2px 4px 0px #0005;
     transform: translateY(0px);
 }
-@media screen and (min-width: 1000px) {
-  :root {
-    zoom:1.2;
-  }
-}
+
 
 </style>
