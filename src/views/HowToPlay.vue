@@ -1,5 +1,5 @@
 <template>
-  <div class="howToPlay">
+  <div class="howToPlay restict-width">
     <div class="section">
       <h1>Object of the Game</h1>
       <p>Guess which ancestor your opponent selected before your opponent guesses which ancestor you selected.</p>

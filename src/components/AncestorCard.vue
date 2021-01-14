@@ -101,10 +101,21 @@
   background-size: 80%;
   background-position: 60% 50%;
   background-repeat: no-repeat;
+  position: relative;
 }
 
-.info:hover {
-  /* border-color: #2b8643; */
+.info.back::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: linear-gradient(45deg, transparent 32%, rgba(255, 255, 255, 0.2) 40%, transparent 50%, transparent 52%, rgba(255, 255, 255, 0.25) 57%, transparent 69%);
+  background-position: 10% 50%;
+  background-size: 300% 300%;
+  transition: background-position 300ms;
 }
 
 img {

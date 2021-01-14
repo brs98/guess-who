@@ -1,62 +1,67 @@
 <template>
 <div>
-  <div id="gameCodeBar" class="ui-raised">Game Code: {{this.$store.state.game.id.toUpperCase()}}</div>
-
-  <div v-if="!mysteryAncestor">
-     <div class="board-section">  
-      <h1>Select your Mystery Ancestor!</h1>
-      <PreselectionCards @clicked="enterGame"/>
+  <div id="gameCodeBar" class="ui-raised">
+    <div class="restrict-width">
+      Game Code: {{this.$store.state.game.id.toUpperCase()}}
     </div>
   </div>
-  <div v-else>
-      <div class="board-section" id="mysteryAncestorBox">
-        <details open>
-          <summary style="font-weight:bold; font-size: 1.2em; margin: .5em 0; outline:none;">Your Mystery Ancestor</summary>
-          <AncestorCard v-if="mysteryAncestor" :ancestor="mysteryAncestor" :width="'20em'" :height="'20em'" />
-        </details>
+
+  <div class="restrict-width">
+    <div v-if="!mysteryAncestor">
+      <div class="board-section">  
+        <h1>Select your Mystery Ancestor!</h1>
+        <CardsList @cardClick="enterGame"/>
       </div>
     </div>
-
-    <div class="board-section" v-if="mysteryAncestor">
-      <button>Guess your opponent's ancestor!</button>
-    
-      <!-- <div v-if="makingGuess === false">
-        <button @click="makingGuess = true">Make a guess</button>
+    <div v-else>
+        <div class="board-section" id="mysteryAncestorBox">
+          <details open>
+            <summary style="font-weight:bold; font-size: 1.2em; margin: .5em 0; outline:none;">Your Mystery Ancestor</summary>
+            <AncestorCard v-if="mysteryAncestor" :ancestor="mysteryAncestor" :width="'20em'" :height="'20em'" />
+          </details>
+        </div>
       </div>
-      <div v-else>
-        <h1>Who do you think is your opponent's Mystery Ancestor?</h1
-        +/>
-        <button class="noButton" @click="makingGuess = false;">Cancel</button>
-        <h3>or select an ancestor</h3>
-        <div class="ancestors">
-         <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id">
-            <button @click="selectAncestor(ancestor)">{{ancestor.name}}</button>
-            <div id="areYouSure" v-show="ancestor.selected === true">
-             <h3>Are you sure you want to select {{ancestor.name}}?</h3>
-             <button id="yesButton" @click="winOrLose(ancestor)">Yes</button>
-             <button class="noButton" @click="ancestor.selected = false">No</button>
+
+      <div class="board-section" v-if="mysteryAncestor">
+        <button style="pointer-events: none">Guess your opponent's ancestor!</button>
+      
+        <!-- <div v-if="makingGuess === false">
+          <button @click="makingGuess = true">Make a guess</button>
+        </div>
+        <div v-else>
+          <h1>Who do you think is your opponent's Mystery Ancestor?</h1
+          +/>
+          <button class="noButton" @click="makingGuess = false;">Cancel</button>
+          <h3>or select an ancestor</h3>
+          <div class="ancestors">
+          <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id">
+              <button @click="selectAncestor(ancestor)">{{ancestor.name}}</button>
+              <div id="areYouSure" v-show="ancestor.selected === true">
+              <h3>Are you sure you want to select {{ancestor.name}}?</h3>
+              <button id="yesButton" @click="winOrLose(ancestor)">Yes</button>
+              <button class="noButton" @click="ancestor.selected = false">No</button>
+              </div>
             </div>
           </div>
-        </div>
-      </div> -->
+        </div> -->
 
-    <Cards @cardClick="handleCardClick" />
+      <CardsList @cardClick="flipCard" />
 
+    </div>
   </div>
+  
 </div>
 </template>
 
 <script>
-  import Cards from '../components/Cards.vue';
-  import PreselectionCards from '../components/PreselectionCards.vue';
+  import CardsList from '../components/CardsList.vue';
   import AncestorCard from "../components/AncestorCard.vue"
 
   import { mapState } from 'vuex';
   export default {
     name: 'Board',
     components: {
-      Cards,
-      PreselectionCards,
+      CardsList,
       AncestorCard
     },
     data: function() {
@@ -70,8 +75,8 @@
       ancestors: state => state.person.tree
     }),
     methods: {
-      handleCardClick(ancestor) {
-        console.log(ancestor)
+      flipCard(ancestor) {
+        ancestor.flipped = !ancestor.flipped
       },
       winOrLose(ancestor) {
         alert(ancestor.name + ' was the Mystery Ancestor or you just lost')

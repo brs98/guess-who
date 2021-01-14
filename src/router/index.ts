@@ -6,11 +6,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Start',
-    component: Start
-  },
-  {
     path: '/instructions',
     name: 'How To Play',
     component: () => import(/* webpackChunkName: "HowToPlay" */ '../views/HowToPlay.vue')
@@ -21,10 +16,10 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "HowToPlay" */ '../views/Play.vue')
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue')
-  }
+    path: '*',
+    name: 'Start',
+    component: Start
+  },
 ]
 
 const router = new VueRouter({

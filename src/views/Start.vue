@@ -1,5 +1,5 @@
 <template>
-  <div id="startWrapper">
+  <div id="startWrapper" class="restrict-width">
     <div v-if="loading"><Spinner /></div>
 
     <div id="menu" v-else>
@@ -40,7 +40,6 @@
 <script>
 import axios from 'axios';
 import GameData from "../../model/entities/GameData.js"
-import CreateGameRequest from "../../model/server/req-res/CreateGameRequest.js"
 import {downloadTree} from '../store/helperFunctions';
 import Spinner from "../components/Spinner.vue"
 
@@ -71,7 +70,6 @@ export default {
   },
 
   mounted() {
-    this.$store.commit("reset")
     if (sessionStorage.getItem("createGameOnReturn")) this.revealNewGame()
   },
 
@@ -85,6 +83,7 @@ export default {
 
     async startNewGame() {
       this.loading = true;
+      this.$store.commit("reset")
       sessionStorage.removeItem("createGameOnReturn")
       console.log("creating game");
 
@@ -98,8 +97,11 @@ export default {
       else alert("Could not create game!");
       this.loading = false;
     },
+
+
     async joinGame() {
       this.loading = true;
+      this.$store.commit("reset")
       console.log("joining game "+this.joinGameCode)
       const game = await axios.get(this.state.apiUrl+"/games/"+this.joinGameCode.toLowerCase()).then(res=>res.data.game)
       if (game) {
