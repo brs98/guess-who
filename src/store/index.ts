@@ -12,7 +12,6 @@ export default new Vuex.Store({
   state: {
     apiUrl: process.env.NODE_ENV==="development"? "http://localhost:5000/api" : "/api",
     fsToken: "",
-    mysteryAncestorSelected: false,
     playerCodes: {
       playerOne:"playerOne",
       playerTwo: "playerTwo"
@@ -20,33 +19,21 @@ export default new Vuex.Store({
     person: {
       pid: '',
       playerCode: "",
-      mysteryAncestor: {}
     },
     game: new GameData()
   },
   mutations: {
     logout: state => {
       state.fsToken = '';
-      state.mysteryAncestorSelected = false;
       state.person.pid = '';
       state.game = new GameData();
     },
+    reset(state) {
+      state.person.playerCode = "";
+      state.game = new GameData()
+    },
     setGameData(state,data) {
       state.game = data;
-    },
-    deselectAllAncestors: state => {
-      for (let i = 0; i < 15; i++) {
-        state.game.tree[i].selected = false;
-        state.game.tree[i].flipped = false;
-      }
-    },
-    separateMysteryAncestor: state => {
-      for (let i = 0; i < 15; i++) {
-        if (state.game.tree[i].mysteryAncestor === true) {
-          console.log('Assigned mysteryAncestor')
-          state.person.mysteryAncestor = state.game.tree[i];
-        }
-      }
     }
   },
   actions: {

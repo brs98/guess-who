@@ -13,8 +13,7 @@
     },
     methods: {
       selectAncestor(ancestor) {
-        ancestor.mysteryAncestor = true;
-        this.$emit('clicked', true)
+        this.$emit('clicked', ancestor)
       }
     }
   }

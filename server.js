@@ -72,10 +72,8 @@ function createGame(tree) {
 }
 
 function deleteGame(gameId) {
-  console.log("DELETING ", gameId)
   let gameMatch = games.get(gameId);
   if (gameMatch) {
-
     games.delete(gameMatch.id)
     console.log('Deleting game ' + gameMatch.id)
     return true;

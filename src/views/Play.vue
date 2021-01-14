@@ -1,46 +1,68 @@
 <template>
-  <div class="board">
-    <div v-if="this.$store.state.mysteryAncestorSelected === false">
+<div>
+  <div id="gameCodeBar" class="ui-raised">Game Code: {{this.$store.state.game.id.toUpperCase()}}</div>
+
+  <div v-if="!mysteryAncestor">
+     <div class="board-section">  
       <h1>Select your Mystery Ancestor!</h1>
       <PreselectionCards @clicked="enterGame"/>
     </div>
-    <div v-else>
-      <div v-if="guessButtonClicked === false">
-        <button  @click="guessButtonClicked = true">Make a guess</button>
-        <Cards />
+  </div>
+  <div v-else>
+      <div class="board-section" id="mysteryAncestorBox">
+        <details open>
+          <summary style="font-weight:bold; font-size: 1.2em; margin: .5em 0; outline:none;">Your Mystery Ancestor</summary>
+          <AncestorCard v-if="mysteryAncestor" :ancestor="mysteryAncestor" :width="'20em'" :height="'20em'" />
+        </details>
+      </div>
+    </div>
+
+    <div class="board-section" v-if="mysteryAncestor">
+      <button>Guess your opponent's ancestor!</button>
+    
+      <!-- <div v-if="makingGuess === false">
+        <button @click="makingGuess = true">Make a guess</button>
       </div>
       <div v-else>
-        <h1>Who do you think is your opponent's Mystery Ancestor?</h1>
-        <button class="noButton" @click="guessButtonClicked = false; deselectAllAncestors()">Cancel</button>
+        <h1>Who do you think is your opponent's Mystery Ancestor?</h1
+        +/>
+        <button class="noButton" @click="makingGuess = false;">Cancel</button>
         <h3>or select an ancestor</h3>
         <div class="ancestors">
-          <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id">
+         <div class="ancestor" v-for="ancestor in ancestors" :key="ancestor.id">
             <button @click="selectAncestor(ancestor)">{{ancestor.name}}</button>
             <div id="areYouSure" v-show="ancestor.selected === true">
-              <h3>Are you sure you want to select {{ancestor.name}}?</h3>
-              <button id="yesButton" @click="winOrLose(ancestor)">Yes</button>
-              <button class="noButton" @click="ancestor.selected = false">No</button>
+             <h3>Are you sure you want to select {{ancestor.name}}?</h3>
+             <button id="yesButton" @click="winOrLose(ancestor)">Yes</button>
+             <button class="noButton" @click="ancestor.selected = false">No</button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
+
+    <Cards @cardClick="handleCardClick" />
+
   </div>
+</div>
 </template>
 
 <script>
   import Cards from '../components/Cards.vue';
   import PreselectionCards from '../components/PreselectionCards.vue';
+  import AncestorCard from "../components/AncestorCard.vue"
+
   import { mapState } from 'vuex';
   export default {
     name: 'Board',
     components: {
       Cards,
-      PreselectionCards
+      PreselectionCards,
+      AncestorCard
     },
     data: function() {
       return {
-        guessButtonClicked: false,
+        mysteryAncestor: null,
+        makingGuess: false,
         yesButtonClicked: false
       }
     },
@@ -48,30 +70,37 @@
       ancestors: state => state.person.tree
     }),
     methods: {
-      selectAncestor(ancestor) {
-        ancestor.selected = true;
-      },
-      deselectAllAncestors() {
-        this.$store.dispatch('deselectAllAncestors');
+      handleCardClick(ancestor) {
+        console.log(ancestor)
       },
       winOrLose(ancestor) {
         alert(ancestor.name + ' was the Mystery Ancestor or you just lost')
       },
-      enterGame(value) {
-        this.$store.state.mysteryAncestorSelected = value;
-        this.$store.dispatch('separateMysteryAncestor');
+      enterGame(ancestor) {
+        this.mysteryAncestor = ancestor;
         alert('The youngest player goes first. Have fun!');
       }
     },
     mounted() {
-      this.$store.dispatch('deselectAllAncestors');
+      if (!this.$store.state.game.tree) this.$router.push("/")
     }
   }
 </script>
 
 <style scoped>
-  .board {
-    border-style: solid;
+  #gameCodeBar {
+    font-weight: bold;
+    padding: .5em;
+    background-color: #fff;
+    font-size:1.2em;
+  }
+
+  .board-section {
+    margin:.5em;
+  }
+
+  #mysteryAncestorBox {
+    border: 3px solid;
     border-radius: 4px;
   }
 
