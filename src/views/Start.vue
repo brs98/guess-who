@@ -88,7 +88,14 @@ export default {
       console.log("creating game");
 
       const tree = [];
-      await downloadTree(tree,this.rootPid,this.state.fsToken)
+      try {
+        await downloadTree(tree,this.rootPid,this.state.fsToken)
+      }
+      catch (e) { 
+        alert(e.message);
+        this.loading = false;
+        return;
+      }
       const game = await axios.post(this.state.apiUrl+"/newgame",{tree}).then(res=>res.data.game)
       if (game) {
         this.$store.commit("setGameData",game)

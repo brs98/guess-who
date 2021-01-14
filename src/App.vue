@@ -6,8 +6,11 @@
           <img :src="require('./assets/logo.png')" />
         </div>
         <div id="navLinks">
-          <router-link to="/">Home</router-link> |
-          <router-link to="/instructions">How To Play</router-link>
+          <router-link to="/">Home</router-link>
+          | <router-link to="/instructions">How To Play</router-link>
+          <span  v-if="this.$store.state.game.tree && this.$route.name != 'Play'">
+            | <router-link to="/play">Back to Game</router-link>
+          </span>
         </div>
       </div>
     </div>
@@ -183,8 +186,8 @@ img.ui-raised {
   box-shadow: none;
 }
 .ui-raised.ui-pressable:hover, .ui-raised.ui-pressable:focus {
-    box-shadow: 3px 3px 5px 1px #0004;
-    transform: translateY(-1px) scale(1.05);
+    box-shadow: 3px 3px 5px 3px #0004;
+    transform: translateY(-2px);
 }
 .ui-raised.ui-pressable:active {
     box-shadow: 1px 2px 4px 0px #0005;

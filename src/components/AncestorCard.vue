@@ -5,12 +5,13 @@
         <div class="info back" v-if="isFlipped" key="cardBack">
         </div>
         <div class="info" v-else>
-          <img class="portrait" :src="ancestor.image" draggable="false">
+          <div class="portrait" :style="`background-image:url(${ancestor.image})`"></div>
           <div class="data">
             <div class="card-title">{{ancestor.name}}</div>
             <div class="data-row">{{ancestor.lifespan}}</div>
             <div class="data-row">Gender: {{ancestor.gender}}</div>
-            <!-- <div class="data-row">Place of Birth: {{ancestor.placeOfBirth}}</div> -->
+            <div class="data-row compressed">Birthplace: {{ancestor.placeOfBirth}}</div>
+            <div class="data-row compressed" v-if="ancestor.placeOfDeath">Death place: {{ancestor.placeOfDeath}}</div>
           </div>
         </div>
       </transition>  
@@ -118,10 +119,12 @@
   transition: background-position 300ms;
 }
 
-img {
+div.portrait {
   width: 100%;
   flex-grow:1;
   object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 
 .card-title {
@@ -132,8 +135,17 @@ img {
 }
 
 .data > div {
-  margin: .2em 0;
+  margin: .25em 0;
   font-size: .9em;
+}
+
+.data-row.compressed { 
+  font-size: .85em;
+  opacity: .7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }
 
 </style>

@@ -3,55 +3,28 @@ import axios from 'axios';
 
 export async function downloadTree(tree,pid,fsToken) {
   console.log('downloadTree function was called!');
-  const url = "https://api.familysearch.org/platform/tree/ancestry?person=" + pid + "&generations=5";
+  const url = "https://api.familysearch.org/platform/tree/ancestry?person=" + pid + "&generations=5&personDetails=";
   const headers = {
     'Accept': 'application/json',
     'Authorization': 'Bearer ' + fsToken
   }
   const res: any = await axios.get(url, {'headers': headers}).then(res=>res.data).catch((err) => {
     console.log(err);
+    throw new Error("Could not get person's data!");
   })
   console.log(res)
   tree.length = 0;
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < Math.min(15,res.persons.length); i++) {
     const person: any = {};
     const personData = res.persons[i];
-    if (personData.display.name) {
-      person.name = personData.display.name;
-    }
-    else {
-      person.name = 'Unknown';
-    }
-    if (personData.display.lifespan) {
-      person.lifespan = personData.display.lifespan;
-    }
-    else {
-      person.lifespan = 'Unknown';
-    }
-    if (personData.display.birthPlace) {
-      person.placeOfBirth = personData.display.birthPlace;
-    }
-    else {
-      person.placeOfBirth = 'Unknown';
-    }
-    if (personData.display.deathPlace) {
-      person.placeOfDeath = personData.display.deathPlace;
-    }
-    else {
-      person.placeOfDeath = 'Unknown';
-    }
-    if (personData.display.gender) {
-      person.gender = personData.display.gender;
-    }
-    else {
-      person.name = 'Unknown';
-    }
-    if (personData.id) {
-      person.pid = personData.id;
-    }
-    else {
-      person.pid = 'Unknown';
-    }
+
+    person.pid = personData.id;
+    person.name = personData.display.name || "Unknown";
+    person.gender = personData.display.gender || "Unknown";
+    person.lifespan = personData.display.lifespan || "Unknown";
+    person.placeOfBirth = personData.display.birthPlace || "Unknown";
+    person.placeOfDeath = personData.display.deathPlace; // This left as null so that living person isn't given a death place;
+    
     person.flipped = false;
     await getPersonImage(person,fsToken);
     tree.push(person)
@@ -71,6 +44,7 @@ async function getPersonImage(person,fsToken) {
   }
   const res: any = await axios.get(url, {'headers': headers}).then(res=>res).catch((err) => {
     console.log(err);
+    throw new Error("Could not get person's image!");
   })
   if (res.headers.location) {
     person.image = res.headers.location;
@@ -78,19 +52,6 @@ async function getPersonImage(person,fsToken) {
   else {
     person.image = '/images/smiley.png';
   }
-}
-async function getPersonData(person,fsToken) {
-  console.log('getPersonData function was called');
-  const url = 'https://api.familysearch.org/platform/tree/persons/' + person.pid + "?flag=fsh";
-  const headers = {
-    'Accept': 'application/x-fs-v1+json',
-    'Authorization': 'Bearer ' + fsToken,
-    'X-Expect-Override': '200-ok',
-  }
-  const res: any = await axios.get(url, {'headers': headers}).then(res=>res).catch((err) => {
-    console.log(err);
-  })
-  console.log(res)
 }
 
 function shuffle(array) {

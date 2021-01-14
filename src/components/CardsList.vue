@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="ancestors">
       <AncestorCard v-for="ancestor in ancestors" :key="ancestor.id"
-        :ancestor="ancestor" :width="'10em'" :height="'17em'" :flippable="true"
+        :ancestor="ancestor" :width="'11em'" :height="'17em'" :flippable="true"
         @cardClick="cardClick" />
     </div>
   </div>

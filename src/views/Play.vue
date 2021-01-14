@@ -17,7 +17,7 @@
         <div class="board-section" id="mysteryAncestorBox">
           <details open>
             <summary style="font-weight:bold; font-size: 1.2em; margin: .5em 0; outline:none;">Your Mystery Ancestor</summary>
-            <AncestorCard v-if="$store.state.mysteryAncestor" :ancestor="$store.state.mysteryAncestor" :width="'20em'" :height="'20em'" />
+            <AncestorCard v-if="$store.state.mysteryAncestor" :ancestor="$store.state.mysteryAncestor" :width="'20em'" :height="'25em'" />
           </details>
         </div>
       </div>
