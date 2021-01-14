@@ -13,13 +13,13 @@ var cors = require('cors')
 let port = 5000;
 server.listen(port);
 
-let dev = true;
+let dev = false;
 
 if (!dev) {
   (async () => {
     const tunnel = await lt({
       port,
-      subdomain: "ancestor-guess-who"
+      subdomain: "whos-your-daddy"
     });
 
     // the assigned public url for your tunnel
