@@ -15,9 +15,6 @@
     methods: {
       login() {
         this.$store.dispatch('login');
-      },
-      logout() {
-        this.$store.dispatch('logout');
       }
     }
   }
