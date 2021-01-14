@@ -13,25 +13,25 @@ var cors = require('cors')
 let port = 5000;
 server.listen(port);
 
-// let dev = false;
+let dev = false;
 
-// if (!dev) {
-//   (async () => {
-//     const tunnel = await lt({
-//       port,
-//       subdomain: "whos-your-daddy"
-//     });
+if (!dev) {
+  (async () => {
+    const tunnel = await lt({
+      port,
+      subdomain: "whos-your-daddy"
+    });
 
-//     // the assigned public url for your tunnel
-//     console.log("App on network: " + tunnel.url);
-//     open(tunnel.url)
+    // the assigned public url for your tunnel
+    console.log("App on network: " + tunnel.url);
+    open(tunnel.url)
 
-//     tunnel.on('close', () => {
-//       // tunnels are closed
-//       console.log(`Network tunnel to port ${port} was closed.`)
-//     });
-//   })();
-// }
+    tunnel.on('close', () => {
+      // tunnels are closed
+      console.log(`Network tunnel to port ${port} was closed.`)
+    });
+  })();
+}
 
 var corsOptions = {
 }
