@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import JWTDecode from 'jwt-decode';
+import JWTSimple from 'jwt-simple';
 import GameData from "../../model/entities/GameData.js"
 
 //STORE STARTS HERE
@@ -43,13 +44,19 @@ export default new Vuex.Store({
   },
   actions: {
     determineLoginStatus(context) {
-      const codedToken = new URLSearchParams(window.location.search).get("fstoken");
+      let secret = "starwarsspoilers";
       let decodedToken;
-      if (codedToken != undefined) {
-        decodedToken = JWTDecode(codedToken);
+      let codedToken = new URLSearchParams(window.location.search).get("fstoken");
+      if (codedToken) decodedToken = JWTDecode(codedToken);
+      else codedToken = localStorage.getItem("fsToken");
+      if (codedToken) decodedToken = JWTSimple.decode(codedToken,secret);
+      if (decodedToken) {
+        if (Date.now() > decodedToken.exp*1000) return console.log("User session has expired.")
+
         context.state.person.pid = decodedToken.fs_user.pid;
         context.state.fsToken = decodedToken.fs_access_token;
         
+        localStorage.setItem("fsToken",JWTSimple.encode(decodedToken,secret));
         window.history.pushState("", "Title", "/"); // this removes the token from the address bar
       }
       else {
