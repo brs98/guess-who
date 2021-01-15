@@ -76,7 +76,7 @@ body {
 
 
 #navLogo img {
-  width: 6em;
+  width: 4em;
 }
 
 #nav a {

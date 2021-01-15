@@ -3,6 +3,11 @@
     <div v-if="loading"><Spinner /></div>
 
     <div id="menu" v-else>
+      <div id="bigLogo">
+        <img :src="require('../assets/logo.png')" />
+      </div>
+      <h2>The get-to-know-your-ancestors game!</h2>
+      
       <button class="ui-raised ui-pressable" @click="revealNewGame">New Game</button>
       <button class="ui-raised ui-pressable" @click="revealJoinGame">Join Game</button>
       
@@ -33,7 +38,27 @@
           <br><button role="submit" class="ui-pressable ui-raised" :disabled="!rootPid">GO!</button>
         </div>
       </form>
+
+      <hr style="max-width: 20em; margin: 2em auto;">
+
+      <details id="instructions">
+        <summary>How To Start</summary>
+        <ol>
+          <li>Create a new game.</li>
+          <div>Supply a valid FamilySearch PID to load ancestors of a different person.</div>
+        
+          <li>Have your opponent join.</li>
+          <div>Use the Game Code from the next screen to join the game.</div>
+        
+          <li>Select your secret ancestor.</li>
+          <div>Click on one of the cards and don't show your opponent!</div>
+
+          <li>Have fun guessing!</li>
+          <div>See <router-link to="/instructions">How To Play</router-link> for more instructions.</div>
+        </ol>
+      </details>
     </div>
+
   </div>
 </template>
 
@@ -131,9 +156,35 @@ export default {
 
 <style scoped>
 #startWrapper {
-  padding-top: 20vh;
+  padding:1em;
+  padding-top: 4em;
   /* display: flex;
   place-content: center;
   place-items: center; */
+}
+
+#bigLogo img {
+  width: 100%;
+  max-width: 25rem;
+}
+
+#instructions {
+  max-width:max-content;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#instructions summary {
+}
+
+#instructions ol {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+#instructions li {
+  font-weight: bold;
+  max-width: max-content;
+  margin: 1em auto .5em auto;
 }
 </style>
