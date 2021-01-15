@@ -1,10 +1,10 @@
 <template>
-  <div class="card" :class="{'ui-raised ui-pressable':canFlip}" :style="{width,height}" @click="cardClick">
+  <div class="card" :class="{'ui-raised ui-pressable':canFlip}" :style="{width,height}">
     <div class="flip-wrapper ui-raised" :class="{flipped: isFlipped}">
       <transition name="cardFlip" :duration="100" mode="out-in">
-        <div class="info back" v-if="isFlipped" key="cardBack">
+        <div class="info back" v-if="isFlipped" key="cardBack" @click="cardClick">
         </div>
-        <div class="info" v-else>
+        <div class="info" v-else @click="cardClick">
           <div class="portrait" :style="`background-image:url(${ancestor.image})`"></div>
           <div class="data">
             <div class="card-title">{{ancestor.name}}</div>
@@ -14,7 +14,12 @@
             <div class="data-row compressed" v-if="ancestor.placeOfDeath">Death place: {{ancestor.placeOfDeath}}</div>
           </div>
         </div>
-      </transition>  
+      </transition>
+      <transition name="showLink" :duration="100" mode="out-in">
+        <a v-if="!ancestor.flipped" :href="'https://www.familysearch.org/tree/person/vitals/'+ancestor.pid" target="_blank" class="button fs-link ui-raised ui-pressable">
+          More Info
+        </a>
+      </transition>
     </div>
   </div>
 </template>
@@ -25,6 +30,10 @@
   export default {
     name: "CardsList",
     props: ["ancestor", "width","height", "flippable"],
+    data() { return {
+      fsTab: null,
+    }},
+
     methods: {
       cardClick() {
         this.$emit('cardClick', this.ancestor)
@@ -146,6 +155,24 @@ div.portrait {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;  
   overflow: hidden;
+}
+
+.fs-link {
+  position: absolute;
+  bottom: .6em;
+  left: 3%;
+  width: 94%;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: .5em;
+  font-size: .8em;
+  text-decoration: none;
+  opacity: 0;
+  background: green;
+}
+
+.card:hover .fs-link {
+  opacity: 1;
 }
 
 </style>
