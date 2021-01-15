@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import JWTDecode from 'jwt-decode';
-import JWTSimple from 'jwt-simple';
 import GameData from "../../model/entities/GameData.js"
 
 //STORE STARTS HERE
@@ -34,9 +33,11 @@ export default new Vuex.Store({
       state.person.playerCode = "";
       state.game = new GameData();
       state.mysteryAncestor = null;
+      localStorage.removeItem("gameData");
     },
     setGameData(state,data) {
       state.game = data;
+      localStorage.setItem("gameData",JSON.stringify(data));
     },
     setMysteryAncestor(state,ancestor) {
       state.mysteryAncestor = ancestor;
@@ -44,25 +45,25 @@ export default new Vuex.Store({
   },
   actions: {
     determineLoginStatus(context) {
-      let secret = "starwarsspoilers";
       let decodedToken;
       let codedToken = new URLSearchParams(window.location.search).get("fstoken");
       if (codedToken) decodedToken = JWTDecode(codedToken);
       else codedToken = localStorage.getItem("fsToken");
-      if (codedToken) decodedToken = JWTSimple.decode(codedToken,secret);
+      if (codedToken) decodedToken = JWTDecode(codedToken);
       if (decodedToken) {
         if (Date.now() > decodedToken.exp*1000) return console.log("User session has expired.")
 
         context.state.person.pid = decodedToken.fs_user.pid;
         context.state.fsToken = decodedToken.fs_access_token;
         
-        localStorage.setItem("fsToken",JWTSimple.encode(decodedToken,secret));
+        localStorage.setItem("fsToken",codedToken as string);
         window.history.pushState("", "Title", "/"); // this removes the token from the address bar
       }
       else {
         console.log('User is not logged in!');
       }
     },
+
     login: () => {
       axios.get('https://auth.fhtl.byu.edu'+'?redirect=' + window.location.origin + '/&site=key').then((res) => {
         window.location = res.request.responseURL;
@@ -70,6 +71,7 @@ export default new Vuex.Store({
         console.log(err);
       });
     },
+    
     logout({commit}){
       return new Promise<void>((resolve) => {
         commit('logout')

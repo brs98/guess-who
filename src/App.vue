@@ -9,7 +9,7 @@
           <router-link to="/">Home</router-link>
           | <router-link to="/instructions">How To Play</router-link>
           <span  v-if="this.$store.state.game.tree && this.$route.name != 'Play'">
-            | <router-link to="/play">Back to Game</router-link>
+          <router-link class="button ui-raised ui-pressable" style="background:green" to="/play">Back to Game</router-link>
           </span>
         </div>
       </div>
@@ -21,12 +21,14 @@
 </template>
 
 <script>
+import axios from 'axios';
   export default {
     name: 'App',
     components: {
     },
     created() {
-      return this.$store.dispatch("determineLoginStatus");
+      this.$store.dispatch("determineLoginStatus");
+      this.checkForGame();
     },
     computed: {
       isLoggedIn() {
@@ -34,6 +36,16 @@
       }
     },
     methods: {
+      async checkForGame() {
+        let data = JSON.parse(localStorage.getItem("gameData"));
+        console.log(data)
+        if (data) {
+          let res = await axios.get(this.$store.state.apiUrl+"/games/"+data.id).then(res=>res.data);
+          if(res.ok) {
+            this.$store.commit("setGameData",res.game);
+          }
+        }
+      }
     }
   }
 </script>
@@ -75,7 +87,7 @@ body {
 
 
 #navLogo img {
-  width: 4em;
+  width: 5em;
 }
 
 #nav a {
@@ -187,7 +199,7 @@ img.ui-raised {
 }
 .ui-raised.ui-pressable:hover, .ui-raised.ui-pressable:focus {
     box-shadow: 3px 3px 5px 0px #0004;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 .ui-raised.ui-pressable:active {
     box-shadow: 1px 2px 4px 0px #0005;
