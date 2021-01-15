@@ -13,7 +13,7 @@ var cors = require('cors')
 let port = 5000;
 server.listen(port);
 
-let dev = false;
+let dev = true;
 
 if (!dev) {
   (async () => {

@@ -26,7 +26,6 @@
     components: {
     },
     created() {
-      document.title = "Who's Your Daddy? Geneology Game"
       return this.$store.dispatch("determineLoginStatus");
     },
     computed: {

@@ -49,6 +49,8 @@ export default new Vuex.Store({
         decodedToken = JWTDecode(codedToken);
         context.state.person.pid = decodedToken.fs_user.pid;
         context.state.fsToken = decodedToken.fs_access_token;
+        
+        window.history.pushState("", "Title", "/"); // this removes the token from the address bar
       }
       else {
         console.log('User is not logged in!');
