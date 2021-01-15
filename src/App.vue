@@ -187,7 +187,7 @@ img.ui-raised {
   box-shadow: none;
 }
 .ui-raised.ui-pressable:hover, .ui-raised.ui-pressable:focus {
-    box-shadow: 3px 3px 5px 3px #0004;
+    box-shadow: 3px 3px 5px 0px #0004;
     transform: translateY(-2px);
 }
 .ui-raised.ui-pressable:active {
