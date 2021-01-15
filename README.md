@@ -1,6 +1,6 @@
 # Who's Your Daddy? <!-- omit in toc -->
 
-A "Guess Who?" style game intended to help people get to know there anccestors better. Players will become more familiar with their Family History as they try to make connections between their ancestors in order to win the game.
+A "Guess Who?" style game intended to help people get to know their anccestors better. Players will become more familiar with their Family History as they try to make connections between their ancestors in order to win the game.
 
 <hr>
 
