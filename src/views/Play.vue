@@ -13,6 +13,7 @@
         <CardsList @cardClick="enterGame"/>
       </div>
     </div>
+
     <div v-else>
         <div class="board-section" id="mysteryAncestorBox">
           <details open>
@@ -25,12 +26,17 @@
       <div class="board-section" v-if="$store.state.mysteryAncestor">
         <button style="pointer-events: none">Guess your opponent's person!</button>
       
+        <!--
+          The HTML below is intended for a version of the game where each player's
+          ancestor is saved on the server and the server has an endpoint for making the guesses.
+          It is not currently implemented.
+        -->
+
         <!-- <div v-if="makingGuess === false">
           <button @click="makingGuess = true">Make a guess</button>
         </div>
         <div v-else>
-          <h1>Who do you think is your opponent's Mystery Ancestor?</h1
-          +/>
+          <h1>Who do you think is your opponent's Mystery Ancestor?</h1>
           <button class="noButton" @click="makingGuess = false;">Cancel</button>
           <h3>or select an ancestor</h3>
           <div class="ancestors">
