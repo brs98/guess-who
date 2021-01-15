@@ -1,5 +1,5 @@
 <template>
-<div v-if="$store.state.game">
+<div v-if="$store.state.game.tree">
   <div id="gameCodeBar" class="ui-raised">
     <div class="restrict-width">
       Game Code: {{this.$store.state.game.id.toUpperCase()}}
@@ -66,7 +66,6 @@
     },
     data: function() {
       return {
-        mysteryAncestor: null,
         makingGuess: false,
         yesButtonClicked: false
       }
@@ -82,24 +81,24 @@
         alert(ancestor.name + ' was the Mystery Ancestor or you just lost')
       },
       enterGame(ancestor) {
-        this.$store.commit("setMysteryAncestor",ancestor);
         let ctx = this;
         this.$nextTick(()=>{
           alert('The youngest player goes first. Have fun!');
-          ctx.flipAll(false,true);
+          ctx.flipAll(false,true,()=>ctx.$store.commit("setMysteryAncestor",ancestor));
         })
       },
 
-      flipAll(toFlipped=true,animate=false) {
+      flipAll(toFlipped=true,animate=false,cb=null) {
         let offset = 50;
         for (let i in this.$store.state.game.tree) {
           let p = this.$store.state.game.tree[i]
           setTimeout(()=>p.flipped = toFlipped, animate? offset*i : 0);
         }
+        if (cb) setTimeout(cb,(offset*this.$store.state.game.tree.length)+50);
       }
     },
-    beforeMount() {
-      if (!this.$store.state.game.tree) this.$router.push("/")
+    mounted() {
+      if (!localStorage.getItem("gameData")) this.$router.push("/")
       if (!this.$store.state.mysteryAncestor) this.flipAll();
     }
   }

@@ -36,14 +36,17 @@ import axios from 'axios';
       }
     },
     methods: {
-      async checkForGame() {
+      checkForGame() {
         let data = JSON.parse(localStorage.getItem("gameData"));
         console.log(data)
         if (data) {
-          let res = await axios.get(this.$store.state.apiUrl+"/games/"+data.id).then(res=>res.data);
-          if(res.ok) {
-            this.$store.commit("setGameData",res.game);
-          }
+          this.$store.commit("setGameData",data);
+          this.$store.commit("setMysteryAncestor",data.mysteryAncestor);
+          
+          axios.get(this.$store.state.apiUrl+"/games/"+data.id).then(res=>{
+            if(!res.data.ok) this.$router.push("/")
+          });
+          
         }
       }
     }

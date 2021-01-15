@@ -41,6 +41,8 @@ export default new Vuex.Store({
     },
     setMysteryAncestor(state,ancestor) {
       state.mysteryAncestor = ancestor;
+      state.game.mysteryAncestor = ancestor;
+      localStorage.setItem("gameData",JSON.stringify(state.game));
     }
   },
   actions: {
