@@ -29,7 +29,7 @@
 
   export default {
     name: "CardsList",
-    props: ["ancestor", "width","height", "flippable"],
+    props: ["ancestor", "width", "height", "flippable"],
     data() { return {
       fsTab: null,
     }},

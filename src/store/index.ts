@@ -69,11 +69,6 @@ export default new Vuex.Store({
         window.location.replace('/#/')
       })
     },
-    setPlayerInfo: context => {
-      context.commit('setPlayerInfo')
-    },
-    deselectAllAncestors: context => context.commit('deselectAllAncestors'),
-    separateMysteryAncestor: context => context.commit('separateMysteryAncestor')
   },
   getters : {
     isLoggedIn: state => !!state.fsToken
