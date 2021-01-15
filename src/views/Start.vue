@@ -20,7 +20,7 @@
       <form v-if="subMenu==='new'" @submit.prevent="startNewGame">
         <div v-if="!isLoggedIn">
           <p>You'll need to log in to FamilySearch first.</p>
-          <button @click="login">Log in to FamilySearch</button>
+          <button @click="login" styel="background:green">Log in to FamilySearch</button>
         </div>
         <div v-else>
           <h3>Start A New Game</h3>

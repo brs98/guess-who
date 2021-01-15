@@ -28,7 +28,7 @@
   import { mapState } from 'vuex';
 
   export default {
-    name: "CardsList",
+    name: "Card",
     props: ["ancestor", "width", "height", "flippable"],
     data() { return {
       fsTab: null,
