@@ -14,13 +14,13 @@
       <form v-if="subMenu==='join'" @submit.prevent="joinGame">
         <h3>Join A Game</h3>
         <input type="text" ref="roomToJoin" v-model="joinGameCode" placeholder="Enter game code" style="text-transform: uppercase; font-size: 1.2em" maxlength="5">
-        <button role="submit" :disabled="joinGameCode.length < 5" class="ui-pressable ui-raised">GO!</button>
+        <button role="submit" :disabled="joinGameCode.length < 5" class="ui-pressable ui-raised" style="background:green">GO!</button>
       </form>
       
       <form v-if="subMenu==='new'" @submit.prevent="startNewGame">
         <div v-if="!isLoggedIn">
           <p>You'll need to log in to FamilySearch first.</p>
-          <button @click="login" styel="background:green">Log in to FamilySearch</button>
+          <button @click="login" style="background:green">Log in to FamilySearch</button>
         </div>
         <div v-else>
           <h3>Start A New Game</h3>
@@ -35,7 +35,7 @@
             <input type="checkbox" id="useCustomPid" v-model="useCustomPid" hidden>
           </div>
           <input v-if="useCustomPid" type="text" v-model="customPid" placeholder="FamilySearch PID" style="text-transform: uppercase; font-size: 1.2em">
-          <br><button role="submit" class="ui-pressable ui-raised" :disabled="!rootPid">GO!</button>
+          <br><button role="submit" class="ui-pressable ui-raised" :disabled="!rootPid" style="background:green">GO!</button>
         </div>
       </form>
 
